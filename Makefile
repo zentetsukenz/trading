@@ -6,7 +6,7 @@ protos_path = protos
 init:
 	mkdir -p $(gen_path)
 
-install: arbitrage gateway
+all: arbitrage gateway
 
 #
 # Arbitrage
