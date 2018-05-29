@@ -1,300 +1,192 @@
 syntax = "proto3";
 
+import "common/exchange.proto";
+import "common/trading_pair.proto";
+
 package trading.arbitrage;
 
-/**
- * Arbitrage service. The general idea of the arbitrage is to buy at lower price
- * and sell at high price. We can do this by watching over two exchanges for a
- * price of a specific trading pair. If the price differs more than a defined
- * gap, the algorithm should execute a trade command for a specific amount.
- *
- * The general rule of thumb for selecting an exchange for a trading pair is
- * selecting an exchange that has the highest trading volume for that pair and
- * exchange that has a moderate trading volume. Because the price of more massive
- * exchange usually goes up or down first. Then, when the price is going up, we
- * arbitrage on smaller exchange to gain profit.
- */
+//
+// Arbitrage service. The general idea of the arbitrage is to buy at lower price
+// and sell at high price. We can do this by watching over two exchanges for a
+// price of a specific trading pair. If the price differs more than a defined
+// gap, the algorithm should execute a trade command for a specific amount.
+//
+// The general rule of thumb for selecting an exchange for a trading pair is
+// selecting an exchange that has the highest trading volume for that pair and
+// exchange that has a moderate trading volume. Because the price of more massive
+// exchange usually goes up or down first. Then, when the price is going up, we
+// arbitrage on smaller exchange to gain profit.
+//
+//
 service ArbitrageService {
-        /**
-         * Set up a context for arbitrage. A client should call initialization
-         * first to prepare a data for trading.
-         */
-        rpc Initialize (InitializeRequest) returns (InitializeResponse);
+  //
+  // Set up a context for arbitrage. A client should call initialization
+  // first to prepare a data for trading.
+  //
+  //
+  rpc Initialize (InitializeRequest) returns (InitializeResponse);
 
-        /**
-         * Handle each price candle. A client should call handle data for each
-         * price tick that client prefers.
-         */
-        rpc HandleData (HandleDataRequest) returns (HandleDataResponse);
+  //
+  // Handle each price candle. A client should call handle data for each
+  // price tick that client prefers.
+  //
+  //
+  rpc HandleData (HandleDataRequest) returns (HandleDataResponse);
 
-        /**
-         * Analyze trading performance. A client should call analyze after handle
-         * data is complete for a performance matrix.
-         */
-        rpc Analysis (AnalysisRequest) returns (AnalysisResponse);
+  //
+  // Analyze trading performance. A client should call analyze after handle
+  // data is complete for a performance matrix.
+  //
+  //
+  rpc Analysis (AnalysisRequest) returns (AnalysisResponse);
 }
 
-/**
- * A basic for all requests.
- */
+//
+// A basic for all requests.
+//
+//
 message BasicRequest {}
 
-/**
- * A basic for all response.
- */
+//
+// A basic for all response.
+//
+//
 message BasicResponse {}
 
-/**
- * Initialization request to define a trading context.
- */
+//
+// Initialization request to define a trading context.
+//
+//
 message InitializeRequest {
-        BasicRequest basic                 = 1;
-        Exchange buying_exchange           = 2;
-        Exchange selling_exchange          = 3;
-        TradingPair trading_pair           = 4;
-        repeated TradingPoint enter_points = 5;
-        repeated TradingPoint exit_points  = 6;
-        double slippage_allowance          = 7;
+  BasicRequest basic                       = 1;
+  trading.common.Exchange buying_exchange  = 2;
+  trading.common.Exchange selling_exchange = 3;
+  trading.common.TradingPair trading_pair  = 4;
+  repeated TradingPoint enter_points       = 5;
+  repeated TradingPoint exit_points        = 6;
+  double slippage_allowance                = 7;
 }
 
-/**
- * Initialization response to a client for a complete trading context.
- */
+//
+// Initialization response to a client for a complete trading context.
+//
+//
 message InitializeResponse {
-        BasicResponse basic = 1;
-        Context context     = 2;
+  BasicResponse basic = 1;
+  Context context     = 2;
 }
 
-/**
- * A price tick data contains buying and selling exchange price data.
- */
+//
+// A price tick data contains buying and selling exchange price data.
+//
+//
 message HandleDataRequest {
-        BasicRequest basic = 1;
-        Context context    = 2;
+  BasicRequest basic = 1;
+  Context context    = 2;
 
-        /**
-         * An exchange that a base currency should be brought using quote
-         * currency if the command is "enter."
-         */
-        ExchangeData buying_exchange = 3;
+  //
+  // An exchange that a base currency should be brought using quote
+  // currency if the command is "enter."
+  //
+  //
+  ExchangeData buying_exchange = 3;
 
-        /**
-         * An exchange that a base currency should be sold to gain quote currency
-         * if the command is "exit."
-         */
-        ExchangeData selling_exchange = 4;
+  //
+  // An exchange that a base currency should be sold to gain quote currency
+  // if the command is "exit."
+  //
+  //
+  ExchangeData selling_exchange = 4;
 }
 
-/**
- * A response return after process price candle. A command for trading is
- * included for a client to execute.
- */
+//
+// A response return after process price candle. A command for trading is
+// included for a client to execute.
+//
+//
 message HandleDataResponse {
-        BasicResponse basic = 1;
-        Command command     = 2;
+  BasicResponse basic = 1;
+  Command command     = 2;
 }
 
-/**
- * TBD
- */
+//
+// TBD
+//
+//
 message AnalysisRequest {
-        BasicRequest basic = 1;
+  BasicRequest basic = 1;
 }
 
-/**
- * TBD
- */
+//
+// TBD
+//
+//
 message AnalysisResponse {
-        BasicResponse basic = 1;
+  BasicResponse basic = 1;
 }
 
-/**
- * An arbitrage context. Contain information about buying/selling exchange and
- * current arbitrage state.
- */
+//
+// An arbitrage context. Contain information about buying/selling exchange and
+// current arbitrage state.
+//
+//
 message Context {
-        string buying_exchange             = 1;
-        string selling_exchange            = 2;
-        TradingPair trading_pair           = 3;
-        repeated TradingPoint entry_points = 4; // Positive gap
-        repeated TradingPoint exit_points  = 5; // Negative gap
-        double slippage_allowance          = 6;
+  string buying_exchange                  = 1;
+  string selling_exchange                 = 2;
+  trading.common.TradingPair trading_pair = 3;
+  repeated TradingPoint entry_points      = 4; // Positive gap
+  repeated TradingPoint exit_points       = 5; // Negative gap
+  double slippage_allowance               = 6;
 }
 
-/**
- * A current trading pair. Base currency and Quote currency format are used to
- * describe the trading pair.
- *
- * For example, a trading pair omg_eth, it means that we are trading "omg" using
- * "eth" as a quote asset.
- */
-message TradingPair {
-        /**
-         * A currency that we are going to transact on. In other words, it is the
-         * currency that we are trading.
-         */
-        string base_currency = 1; // Lower case string.
-
-        /**
-         * A currency that is used to buy a base currency. We gain the quote
-         * currency after executing sell command on the trading pair.
-         */
-        string quote_currency = 2; // Lower case string.
-}
-
-/**
- * A gap and amount of base currency that client should buy or sell if the price
- * reaches the gap.
- */
+//
+// A gap and amount of base currency that client should buy or sell if the price
+// reaches the gap.
+//
+//
 message TradingPoint {
-        double gap = 1;
-        double amount = 2;
+  double gap = 1;
+  double amount = 2;
 }
 
-/**
- * Exchange message definition.
- */
-message Exchange {
-        enum Name {
-             NOT_EXIST          = 0;
-             _1BROKER           = 1;
-             _1BTCXE            = 2;
-             ACX                = 3;
-             ALLCOIN            = 4;
-             ANXPRO             = 5;
-             BIBOX              = 6;
-             BINANCE            = 7;
-             BIT2C              = 8;
-             BITBAY             = 9;
-             BITCOINCOID        = 10;
-             BITFINEX           = 11;
-             BITFINEX2          = 12;
-             BITFLYER           = 13;
-             BITHUMB            = 14;
-             BITLISH            = 15;
-             BITMARKET          = 16;
-             BITMEX             = 17;
-             BITSO              = 18;
-             BITSTAMP           = 19;
-             BITSTAMP1          = 20;
-             BITTREX            = 21;
-             BITZ               = 22;
-             BL3P               = 23;
-             BLEUTRADE          = 24;
-             BRAZILIEX          = 25;
-             BTCBOX             = 26;
-             BTCCHINA           = 27;
-             BTCEXCHANGE        = 28;
-             BTCMARKETS         = 29;
-             BTCTRADEUA         = 30;
-             BTCTURK            = 31;
-             BTCX               = 32;
-             BXINTH             = 33;
-             CCEX               = 34;
-             CEX                = 35;
-             CHBTC              = 36;
-             CHILEBIT           = 37;
-             COBINHOOD          = 38;
-             COINCHECK          = 39;
-             COINEXCHANGE       = 40;
-             COINFLOOR          = 41;
-             COINGI             = 42;
-             COINMARKETCAP      = 43;
-             COINMATE           = 44;
-             COINSECURE         = 45;
-             COINSPOT           = 46;
-             CRYPTOPIA          = 47;
-             DSX                = 48;
-             EXMO               = 49;
-             FLOWBTC            = 50;
-             FOXBIT             = 51;
-             FYBSE              = 52;
-             FYBSG              = 53;
-             GATECOIN           = 54;
-             GATEIO             = 55;
-             GDAX               = 56;
-             GEMINI             = 57;
-             GETBTC             = 58;
-             HITBTC             = 59;
-             HITBTC2            = 60;
-             HUOBI              = 61;
-             HUOBICNY           = 62;
-             HUOBIPRO           = 63;
-             INDEPENDENTRESERVE = 64;
-             ITBIT              = 65;
-             JUBI               = 66;
-             KRAKEN             = 67;
-             KUCOIN             = 68;
-             KUNA               = 69;
-             LAKEBTC            = 70;
-             LIQUI              = 71;
-             LIVECOIN           = 72;
-             LUNO               = 73;
-             LYKKE              = 74;
-             MERCADO            = 75;
-             MIXCOINS           = 76;
-             NOVA               = 77;
-             OKCOINCNY          = 78;
-             OKCOINUSD          = 79;
-             OKEX               = 80;
-             PAYMIUM            = 81;
-             POLONIEX           = 82;
-             QRYPTOS            = 83;
-             QUADRIGACX         = 84;
-             QUOINEX            = 85;
-             SOUTHXCHANGE       = 86;
-             SURBITCOIN         = 87;
-             THEROCK            = 88;
-             TIDEX              = 89;
-             URDUBIT            = 90;
-             VAULTORO           = 91;
-             VBTC               = 92;
-             VIRWOX             = 93;
-             WEX                = 94;
-             XBTCE              = 95;
-             YOBIT              = 96;
-             YUNBI              = 97;
-             ZAIF               = 98;
-             ZB                 = 99;
-        }
-        Name name = 1;
-}
-
-/**
- * An exchange data at a specific time.
- */
+//
+// An exchange data at a specific time.
+//
+//
 message ExchangeData {
-        string name  = 1;
-        BarData data = 2;
+  string name  = 1;
+  BarData data = 2;
 }
 
-/**
- * A price candle data for an exchange. The value depends on the trading pair.
- * For example, if the trading pair is omg_eth and the value is 0.01. We can read
- * it as "We can use 0.01 eth to buy 1 omg" or "1 omg is worth 0.01 eth" or
- * simply "0.01 eth / 1 omg."
- */
+//
+// A price candle data for an exchange. The value depends on the trading pair.
+// For example, if the trading pair is omg_eth and the value is 0.01. We can read
+// it as "We can use 0.01 eth to buy 1 omg" or "1 omg is worth 0.01 eth" or
+// simply "0.01 eth / 1 omg."
+//
+//
 message BarData {
-        double open   = 1;
-        double close  = 2;
-        double high   = 3;
-        double low    = 4;
-        double volume = 5;
+  double open   = 1;
+  double close  = 2;
+  double high   = 3;
+  double low    = 4;
+  double volume = 5;
 }
 
-/**
- * A Command issues to a client. Possible values are "enter," "exit" and "none"
- * indicating that client shouldn't do anything. An amount and buy/sell price is
- * also provided.
- */
+//
+// A Command issues to a client. Possible values are "enter," "exit" and "none"
+// indicating that client shouldn't do anything. An amount and buy/sell price is
+// also provided.
+//
+//
 message Command {
-        enum Action {
-             NONE  = 0;
-             ENTER = 1;
-             EXIT  = 2;
-        }
-        Action action        = 1;
-        double amount        = 2; // Base currency amount to buy and sell.
-        double buying_price  = 3;
-        double selling_price = 4;
+  enum Action {
+    NONE  = 0;
+    ENTER = 1;
+    EXIT  = 2;
+  }
+  Action action        = 1;
+  double amount        = 2; // Base currency amount to buy and sell.
+  double buying_price  = 3;
+  double selling_price = 4;
 }
