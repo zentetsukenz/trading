@@ -1,0 +1,2545 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Protocol Documentation</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic"/>
+    <style>
+      body {
+        width: 60em;
+        margin: 1em auto;
+        color: #222;
+        font-family: "Ubuntu", sans-serif;
+        padding-bottom: 4em;
+      }
+
+      h1 {
+        font-weight: normal;
+        border-bottom: 1px solid #aaa;
+        padding-bottom: 0.5ex;
+      }
+
+      h2 {
+        border-bottom: 1px solid #aaa;
+        padding-bottom: 0.5ex;
+        margin: 1.5em 0;
+      }
+
+      h3 {
+        font-weight: normal;
+        border-bottom: 1px solid #aaa;
+        padding-bottom: 0.5ex;
+      }
+
+      a {
+        text-decoration: none;
+        color: #567e25;
+      }
+
+      table {
+        width: 100%;
+        font-size: 80%;
+        border-collapse: collapse;
+      }
+
+      thead {
+        font-weight: 700;
+        background-color: #dcdcdc;
+      }
+
+      tbody tr:nth-child(even) {
+        background-color: #fbfbfb;
+      }
+
+      td {
+        border: 1px solid #ccc;
+        padding: 0.5ex 2ex;
+      }
+
+      td p {
+        text-indent: 1em;
+        margin: 0;
+      }
+
+      td p:nth-child(1) {
+        text-indent: 0;  
+      }
+
+       
+      .field-table td:nth-child(1) {  
+        width: 10em;
+      }
+      .field-table td:nth-child(2) {  
+        width: 10em;
+      }
+      .field-table td:nth-child(3) {  
+        width: 6em;
+      }
+      .field-table td:nth-child(4) {  
+        width: auto;
+      }
+
+       
+      .extension-table td:nth-child(1) {  
+        width: 10em;
+      }
+      .extension-table td:nth-child(2) {  
+        width: 10em;
+      }
+      .extension-table td:nth-child(3) {  
+        width: 10em;
+      }
+      .extension-table td:nth-child(4) {  
+        width: 5em;
+      }
+      .extension-table td:nth-child(5) {  
+        width: auto;
+      }
+
+       
+      .enum-table td:nth-child(1) {  
+        width: 10em;
+      }
+      .enum-table td:nth-child(2) {  
+        width: 10em;
+      }
+      .enum-table td:nth-child(3) {  
+        width: auto;
+      }
+
+       
+      .scalar-value-types-table tr {
+        height: 3em;
+      }
+
+       
+      #toc-container ul {
+        list-style-type: none;
+        padding-left: 1em;
+        line-height: 180%;
+        margin: 0;
+      }
+      #toc > li > a {
+        font-weight: bold;
+      }
+
+       
+      .file-heading {
+        width: 100%;
+        display: table;
+        border-bottom: 1px solid #aaa;
+        margin: 4em 0 1.5em 0;
+      }
+      .file-heading h2 {
+        border: none;
+        display: table-cell;
+      }
+      .file-heading a {
+        text-align: right;
+        display: table-cell;
+      }
+
+       
+      .badge {
+        width: 1.6em;
+        height: 1.6em;
+        display: inline-block;
+
+        line-height: 1.6em;
+        text-align: center;
+        font-weight: bold;
+        font-size: 60%;
+
+        color: #89ba48;
+        background-color: #dff0c8;
+
+        margin: 0.5ex 1em 0.5ex -1em;
+        border: 1px solid #fbfbfb;
+        border-radius: 1ex;
+      }
+    </style>
+
+    
+    <link rel="stylesheet" type="text/css" href="stylesheet.css"/>
+  </head>
+
+  <body>
+
+    <h1 id="title">Protocol Documentation</h1>
+
+    <h2>Table of Contents</h2>
+
+    <div id="toc-container">
+      <ul id="toc">
+        
+          
+          <li>
+            <a href="#arbitrage.proto">arbitrage.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#trading.arbitrage.AnalysisRequest"><span class="badge">M</span>AnalysisRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.AnalysisResponse"><span class="badge">M</span>AnalysisResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.BarData"><span class="badge">M</span>BarData</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.BasicRequest"><span class="badge">M</span>BasicRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.BasicResponse"><span class="badge">M</span>BasicResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.Command"><span class="badge">M</span>Command</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.Context"><span class="badge">M</span>Context</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.Exchange"><span class="badge">M</span>Exchange</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.ExchangeData"><span class="badge">M</span>ExchangeData</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.HandleDataRequest"><span class="badge">M</span>HandleDataRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.HandleDataResponse"><span class="badge">M</span>HandleDataResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.InitializeRequest"><span class="badge">M</span>InitializeRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.InitializeResponse"><span class="badge">M</span>InitializeResponse</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.TradingPair"><span class="badge">M</span>TradingPair</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.TradingPoint"><span class="badge">M</span>TradingPoint</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#trading.arbitrage.Command.Action"><span class="badge">E</span>Command.Action</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.arbitrage.Exchange.Name"><span class="badge">E</span>Exchange.Name</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#trading.arbitrage.ArbitrageService"><span class="badge">S</span>ArbitrageService</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+          
+          <li>
+            <a href="#gateway.proto">gateway.proto</a>
+            <ul>
+              
+                <li>
+                  <a href="#exchange_gateway.Exchange"><span class="badge">M</span>Exchange</a>
+                </li>
+              
+                <li>
+                  <a href="#exchange_gateway.Symbol"><span class="badge">M</span>Symbol</a>
+                </li>
+              
+                <li>
+                  <a href="#exchange_gateway.Ticker"><span class="badge">M</span>Ticker</a>
+                </li>
+              
+                <li>
+                  <a href="#exchange_gateway.TickerRequest"><span class="badge">M</span>TickerRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#exchange_gateway.Tickers"><span class="badge">M</span>Tickers</a>
+                </li>
+              
+                <li>
+                  <a href="#exchange_gateway.Tickers.DataEntry"><span class="badge">M</span>Tickers.DataEntry</a>
+                </li>
+              
+              
+                <li>
+                  <a href="#exchange_gateway.ExchangeName"><span class="badge">E</span>ExchangeName</a>
+                </li>
+              
+              
+              
+                <li>
+                  <a href="#exchange_gateway.ExchangeGateway"><span class="badge">S</span>ExchangeGateway</a>
+                </li>
+              
+            </ul>
+          </li>
+        
+        <li><a href="#scalar-value-types">Scalar Value Types</a></li>
+      </ul>
+    </div>
+
+    
+      
+      <div class="file-heading">
+        <h2 id="arbitrage.proto">arbitrage.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="trading.arbitrage.AnalysisRequest">AnalysisRequest</h3>
+        <p>TBD</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>basic</td>
+                  <td><a href="#trading.arbitrage.BasicRequest">BasicRequest</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="trading.arbitrage.AnalysisResponse">AnalysisResponse</h3>
+        <p>TBD</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>basic</td>
+                  <td><a href="#trading.arbitrage.BasicResponse">BasicResponse</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="trading.arbitrage.BarData">BarData</h3>
+        <p>A price candle data for an exchange. The value depends on the trading pair.</p><p>For example, if the trading pair is omg_eth and the value is 0.01. We can read</p><p>it as "We can use 0.01 eth to buy 1 omg" or "1 omg is worth 0.01 eth" or</p><p>simply "0.01 eth / 1 omg."</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>open</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>close</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>high</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>low</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>volume</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="trading.arbitrage.BasicRequest">BasicRequest</h3>
+        <p>A basic for all requests.</p>
+
+        
+
+        
+      
+        <h3 id="trading.arbitrage.BasicResponse">BasicResponse</h3>
+        <p>A basic for all response.</p>
+
+        
+
+        
+      
+        <h3 id="trading.arbitrage.Command">Command</h3>
+        <p>A Command issues to a client. Possible values are "enter," "exit" and "none"</p><p>indicating that client shouldn't do anything. An amount and buy/sell price is</p><p>also provided.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>action</td>
+                  <td><a href="#trading.arbitrage.Command.Action">Command.Action</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>amount</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p>Base currency amount to buy and sell. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>buying_price</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>selling_price</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="trading.arbitrage.Context">Context</h3>
+        <p>An arbitrage context. Contain information about buying/selling exchange and</p><p>current arbitrage state.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>buying_exchange</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>selling_exchange</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trading_pair</td>
+                  <td><a href="#trading.arbitrage.TradingPair">TradingPair</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>entry_points</td>
+                  <td><a href="#trading.arbitrage.TradingPoint">TradingPoint</a></td>
+                  <td>repeated</td>
+                  <td><p>Positive gap </p></td>
+                </tr>
+              
+                <tr>
+                  <td>exit_points</td>
+                  <td><a href="#trading.arbitrage.TradingPoint">TradingPoint</a></td>
+                  <td>repeated</td>
+                  <td><p>Negative gap </p></td>
+                </tr>
+              
+                <tr>
+                  <td>slippage_allowance</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="trading.arbitrage.Exchange">Exchange</h3>
+        <p>Exchange message definition.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#trading.arbitrage.Exchange.Name">Exchange.Name</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="trading.arbitrage.ExchangeData">ExchangeData</h3>
+        <p>An exchange data at a specific time.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>data</td>
+                  <td><a href="#trading.arbitrage.BarData">BarData</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="trading.arbitrage.HandleDataRequest">HandleDataRequest</h3>
+        <p>A price tick data contains buying and selling exchange price data.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>basic</td>
+                  <td><a href="#trading.arbitrage.BasicRequest">BasicRequest</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>context</td>
+                  <td><a href="#trading.arbitrage.Context">Context</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>buying_exchange</td>
+                  <td><a href="#trading.arbitrage.ExchangeData">ExchangeData</a></td>
+                  <td></td>
+                  <td><p>An exchange that a base currency should be brought using quote
+currency if the command is &#34;enter.&#34; </p></td>
+                </tr>
+              
+                <tr>
+                  <td>selling_exchange</td>
+                  <td><a href="#trading.arbitrage.ExchangeData">ExchangeData</a></td>
+                  <td></td>
+                  <td><p>An exchange that a base currency should be sold to gain quote currency
+if the command is &#34;exit.&#34; </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="trading.arbitrage.HandleDataResponse">HandleDataResponse</h3>
+        <p>A response return after process price candle. A command for trading is</p><p>included for a client to execute.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>basic</td>
+                  <td><a href="#trading.arbitrage.BasicResponse">BasicResponse</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>command</td>
+                  <td><a href="#trading.arbitrage.Command">Command</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="trading.arbitrage.InitializeRequest">InitializeRequest</h3>
+        <p>Initialization request to define a trading context.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>basic</td>
+                  <td><a href="#trading.arbitrage.BasicRequest">BasicRequest</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>buying_exchange</td>
+                  <td><a href="#trading.arbitrage.Exchange">Exchange</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>selling_exchange</td>
+                  <td><a href="#trading.arbitrage.Exchange">Exchange</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>trading_pair</td>
+                  <td><a href="#trading.arbitrage.TradingPair">TradingPair</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>enter_points</td>
+                  <td><a href="#trading.arbitrage.TradingPoint">TradingPoint</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>exit_points</td>
+                  <td><a href="#trading.arbitrage.TradingPoint">TradingPoint</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>slippage_allowance</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="trading.arbitrage.InitializeResponse">InitializeResponse</h3>
+        <p>Initialization response to a client for a complete trading context.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>basic</td>
+                  <td><a href="#trading.arbitrage.BasicResponse">BasicResponse</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>context</td>
+                  <td><a href="#trading.arbitrage.Context">Context</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="trading.arbitrage.TradingPair">TradingPair</h3>
+        <p>A current trading pair. Base currency and Quote currency format are used to</p><p>describe the trading pair.</p><p>For example, a trading pair omg_eth, it means that we are trading "omg" using</p><p>"eth" as a quote asset.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>base_currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>A currency that we are going to transact on. In other words, it is the
+currency that we are trading.
+
+Lower case string. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>quote_currency</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>A currency that is used to buy a base currency. We gain the quote
+currency after executing sell command on the trading pair.
+
+Lower case string. </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="trading.arbitrage.TradingPoint">TradingPoint</h3>
+        <p>A gap and amount of base currency that client should buy or sell if the price</p><p>reaches the gap.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>gap</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>amount</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+
+      
+        <h3 id="trading.arbitrage.Command.Action">Command.Action</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>NONE</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ENTER</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>EXIT</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="trading.arbitrage.Exchange.Name">Exchange.Name</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>NOT_EXIST</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>_1BROKER</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>_1BTCXE</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ACX</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ALLCOIN</td>
+                <td>4</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ANXPRO</td>
+                <td>5</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BIBOX</td>
+                <td>6</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BINANCE</td>
+                <td>7</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BIT2C</td>
+                <td>8</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITBAY</td>
+                <td>9</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITCOINCOID</td>
+                <td>10</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITFINEX</td>
+                <td>11</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITFINEX2</td>
+                <td>12</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITFLYER</td>
+                <td>13</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITHUMB</td>
+                <td>14</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITLISH</td>
+                <td>15</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITMARKET</td>
+                <td>16</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITMEX</td>
+                <td>17</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITSO</td>
+                <td>18</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITSTAMP</td>
+                <td>19</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITSTAMP1</td>
+                <td>20</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITTREX</td>
+                <td>21</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITZ</td>
+                <td>22</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BL3P</td>
+                <td>23</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BLEUTRADE</td>
+                <td>24</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BRAZILIEX</td>
+                <td>25</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BTCBOX</td>
+                <td>26</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BTCCHINA</td>
+                <td>27</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BTCEXCHANGE</td>
+                <td>28</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BTCMARKETS</td>
+                <td>29</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BTCTRADEUA</td>
+                <td>30</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BTCTURK</td>
+                <td>31</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BTCX</td>
+                <td>32</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BXINTH</td>
+                <td>33</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CCEX</td>
+                <td>34</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CEX</td>
+                <td>35</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CHBTC</td>
+                <td>36</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CHILEBIT</td>
+                <td>37</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COBINHOOD</td>
+                <td>38</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINCHECK</td>
+                <td>39</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINEXCHANGE</td>
+                <td>40</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINFLOOR</td>
+                <td>41</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINGI</td>
+                <td>42</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINMARKETCAP</td>
+                <td>43</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINMATE</td>
+                <td>44</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINSECURE</td>
+                <td>45</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINSPOT</td>
+                <td>46</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CRYPTOPIA</td>
+                <td>47</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DSX</td>
+                <td>48</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>EXMO</td>
+                <td>49</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FLOWBTC</td>
+                <td>50</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FOXBIT</td>
+                <td>51</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FYBSE</td>
+                <td>52</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FYBSG</td>
+                <td>53</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GATECOIN</td>
+                <td>54</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GATEIO</td>
+                <td>55</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GDAX</td>
+                <td>56</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GEMINI</td>
+                <td>57</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GETBTC</td>
+                <td>58</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>HITBTC</td>
+                <td>59</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>HITBTC2</td>
+                <td>60</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>HUOBI</td>
+                <td>61</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>HUOBICNY</td>
+                <td>62</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>HUOBIPRO</td>
+                <td>63</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>INDEPENDENTRESERVE</td>
+                <td>64</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ITBIT</td>
+                <td>65</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>JUBI</td>
+                <td>66</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>KRAKEN</td>
+                <td>67</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>KUCOIN</td>
+                <td>68</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>KUNA</td>
+                <td>69</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>LAKEBTC</td>
+                <td>70</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>LIQUI</td>
+                <td>71</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>LIVECOIN</td>
+                <td>72</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>LUNO</td>
+                <td>73</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>LYKKE</td>
+                <td>74</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MERCADO</td>
+                <td>75</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MIXCOINS</td>
+                <td>76</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>NOVA</td>
+                <td>77</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>OKCOINCNY</td>
+                <td>78</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>OKCOINUSD</td>
+                <td>79</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>OKEX</td>
+                <td>80</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PAYMIUM</td>
+                <td>81</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>POLONIEX</td>
+                <td>82</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>QRYPTOS</td>
+                <td>83</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>QUADRIGACX</td>
+                <td>84</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>QUOINEX</td>
+                <td>85</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SOUTHXCHANGE</td>
+                <td>86</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SURBITCOIN</td>
+                <td>87</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>THEROCK</td>
+                <td>88</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>TIDEX</td>
+                <td>89</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>URDUBIT</td>
+                <td>90</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>VAULTORO</td>
+                <td>91</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>VBTC</td>
+                <td>92</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>VIRWOX</td>
+                <td>93</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>WEX</td>
+                <td>94</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>XBTCE</td>
+                <td>95</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>YOBIT</td>
+                <td>96</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>YUNBI</td>
+                <td>97</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ZAIF</td>
+                <td>98</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ZB</td>
+                <td>99</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="trading.arbitrage.ArbitrageService">ArbitrageService</h3>
+        <p>Arbitrage service. The general idea of the arbitrage is to buy at lower price</p><p>and sell at high price. We can do this by watching over two exchanges for a</p><p>price of a specific trading pair. If the price differs more than a defined</p><p>gap, the algorithm should execute a trade command for a specific amount.</p><p>The general rule of thumb for selecting an exchange for a trading pair is</p><p>selecting an exchange that has the highest trading volume for that pair and</p><p>exchange that has a moderate trading volume. Because the price of more massive</p><p>exchange usually goes up or down first. Then, when the price is going up, we</p><p>arbitrage on smaller exchange to gain profit.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>Initialize</td>
+                <td><a href="#trading.arbitrage.InitializeRequest">InitializeRequest</a></td>
+                <td><a href="#trading.arbitrage.InitializeResponse">InitializeResponse</a></td>
+                <td><p>Set up a context for arbitrage. A client should call initialization
+first to prepare a data for trading.</p></td>
+              </tr>
+            
+              <tr>
+                <td>HandleData</td>
+                <td><a href="#trading.arbitrage.HandleDataRequest">HandleDataRequest</a></td>
+                <td><a href="#trading.arbitrage.HandleDataResponse">HandleDataResponse</a></td>
+                <td><p>Handle each price candle. A client should call handle data for each
+price tick that client prefers.</p></td>
+              </tr>
+            
+              <tr>
+                <td>Analysis</td>
+                <td><a href="#trading.arbitrage.AnalysisRequest">AnalysisRequest</a></td>
+                <td><a href="#trading.arbitrage.AnalysisResponse">AnalysisResponse</a></td>
+                <td><p>Analyze trading performance. A client should call analyze after handle
+data is complete for a performance matrix.</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+    
+      
+      <div class="file-heading">
+        <h2 id="gateway.proto">gateway.proto</h2><a href="#title">Top</a>
+      </div>
+      <p></p>
+
+      
+        <h3 id="exchange_gateway.Exchange">Exchange</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#exchange_gateway.ExchangeName">ExchangeName</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="exchange_gateway.Symbol">Symbol</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="exchange_gateway.Ticker">Ticker</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>symbol</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>timestamp</td>
+                  <td><a href="#uint64">uint64</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>datetime</td>
+                  <td><a href="#google.protobuf.Timestamp">google.protobuf.Timestamp</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>high</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>low</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>bid</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>ask</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>vwap</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>open</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>close</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>first</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>last</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>change</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>percentage</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>average</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>base_volume</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>quote_volume</td>
+                  <td><a href="#double">double</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="exchange_gateway.TickerRequest">TickerRequest</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>exchange</td>
+                  <td><a href="#exchange_gateway.Exchange">Exchange</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>symbol</td>
+                  <td><a href="#exchange_gateway.Symbol">Symbol</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="exchange_gateway.Tickers">Tickers</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>data</td>
+                  <td><a href="#exchange_gateway.Tickers.DataEntry">Tickers.DataEntry</a></td>
+                  <td>repeated</td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="exchange_gateway.Tickers.DataEntry">Tickers.DataEntry</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>key</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>value</td>
+                  <td><a href="#exchange_gateway.Ticker">Ticker</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+
+      
+        <h3 id="exchange_gateway.ExchangeName">ExchangeName</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>DEFAULT</td>
+                <td>0</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>_1BROKER</td>
+                <td>1</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>_1BTCXE</td>
+                <td>2</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ACX</td>
+                <td>3</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ALLCOIN</td>
+                <td>4</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ANXPRO</td>
+                <td>5</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BIBOX</td>
+                <td>6</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BINANCE</td>
+                <td>7</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BIT2C</td>
+                <td>8</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITBAY</td>
+                <td>9</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITCOINCOID</td>
+                <td>10</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITFINEX</td>
+                <td>11</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITFINEX2</td>
+                <td>12</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITFLYER</td>
+                <td>13</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITHUMB</td>
+                <td>14</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITLISH</td>
+                <td>15</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITMARKET</td>
+                <td>16</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITMEX</td>
+                <td>17</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITSO</td>
+                <td>18</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITSTAMP</td>
+                <td>19</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITSTAMP1</td>
+                <td>20</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITTREX</td>
+                <td>21</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BITZ</td>
+                <td>22</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BL3P</td>
+                <td>23</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BLEUTRADE</td>
+                <td>24</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BRAZILIEX</td>
+                <td>25</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BTCBOX</td>
+                <td>26</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BTCCHINA</td>
+                <td>27</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BTCEXCHANGE</td>
+                <td>28</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BTCMARKETS</td>
+                <td>29</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BTCTRADEUA</td>
+                <td>30</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BTCTURK</td>
+                <td>31</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BTCX</td>
+                <td>32</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>BXINTH</td>
+                <td>33</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CCEX</td>
+                <td>34</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CEX</td>
+                <td>35</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CHBTC</td>
+                <td>36</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CHILEBIT</td>
+                <td>37</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COBINHOOD</td>
+                <td>38</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINCHECK</td>
+                <td>39</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINEXCHANGE</td>
+                <td>40</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINFLOOR</td>
+                <td>41</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINGI</td>
+                <td>42</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINMARKETCAP</td>
+                <td>43</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINMATE</td>
+                <td>44</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINSECURE</td>
+                <td>45</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>COINSPOT</td>
+                <td>46</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>CRYPTOPIA</td>
+                <td>47</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>DSX</td>
+                <td>48</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>EXMO</td>
+                <td>49</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FLOWBTC</td>
+                <td>50</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FOXBIT</td>
+                <td>51</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FYBSE</td>
+                <td>52</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FYBSG</td>
+                <td>53</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GATECOIN</td>
+                <td>54</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GATEIO</td>
+                <td>55</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GDAX</td>
+                <td>56</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GEMINI</td>
+                <td>57</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>GETBTC</td>
+                <td>58</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>HITBTC</td>
+                <td>59</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>HITBTC2</td>
+                <td>60</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>HUOBI</td>
+                <td>61</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>HUOBICNY</td>
+                <td>62</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>HUOBIPRO</td>
+                <td>63</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>INDEPENDENTRESERVE</td>
+                <td>64</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ITBIT</td>
+                <td>65</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>JUBI</td>
+                <td>66</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>KRAKEN</td>
+                <td>67</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>KUCOIN</td>
+                <td>68</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>KUNA</td>
+                <td>69</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>LAKEBTC</td>
+                <td>70</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>LIQUI</td>
+                <td>71</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>LIVECOIN</td>
+                <td>72</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>LUNO</td>
+                <td>73</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>LYKKE</td>
+                <td>74</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MERCADO</td>
+                <td>75</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>MIXCOINS</td>
+                <td>76</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>NOVA</td>
+                <td>77</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>OKCOINCNY</td>
+                <td>78</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>OKCOINUSD</td>
+                <td>79</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>OKEX</td>
+                <td>80</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>PAYMIUM</td>
+                <td>81</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>POLONIEX</td>
+                <td>82</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>QRYPTOS</td>
+                <td>83</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>QUADRIGACX</td>
+                <td>84</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>QUOINEX</td>
+                <td>85</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SOUTHXCHANGE</td>
+                <td>86</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>SURBITCOIN</td>
+                <td>87</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>THEROCK</td>
+                <td>88</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>TIDEX</td>
+                <td>89</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>URDUBIT</td>
+                <td>90</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>VAULTORO</td>
+                <td>91</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>VBTC</td>
+                <td>92</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>VIRWOX</td>
+                <td>93</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>WEX</td>
+                <td>94</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>XBTCE</td>
+                <td>95</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>YOBIT</td>
+                <td>96</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>YUNBI</td>
+                <td>97</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ZAIF</td>
+                <td>98</td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>ZB</td>
+                <td>99</td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+
+      
+
+      
+        <h3 id="exchange_gateway.ExchangeGateway">ExchangeGateway</h3>
+        <p></p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>FetchTickers</td>
+                <td><a href="#exchange_gateway.Exchange">Exchange</a></td>
+                <td><a href="#exchange_gateway.Tickers">Tickers</a></td>
+                <td><p></p></td>
+              </tr>
+            
+              <tr>
+                <td>FetchTicker</td>
+                <td><a href="#exchange_gateway.TickerRequest">TickerRequest</a></td>
+                <td><a href="#exchange_gateway.Ticker">Ticker</a></td>
+                <td><p></p></td>
+              </tr>
+            
+          </tbody>
+        </table>
+      
+    
+
+    <h2 id="scalar-value-types">Scalar Value Types</h2>
+    <table class="scalar-value-types-table">
+      <thead>
+        <tr><td>.proto Type</td><td>Notes</td><td>C++ Type</td><td>Java Type</td><td>Python Type</td></tr>
+      </thead>
+      <tbody>
+        
+          <tr id="double">
+            <td>double</td>
+            <td></td>
+            <td>double</td>
+            <td>double</td>
+            <td>float</td>
+          </tr>
+        
+          <tr id="float">
+            <td>float</td>
+            <td></td>
+            <td>float</td>
+            <td>float</td>
+            <td>float</td>
+          </tr>
+        
+          <tr id="int32">
+            <td>int32</td>
+            <td>Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint32 instead.</td>
+            <td>int32</td>
+            <td>int</td>
+            <td>int</td>
+          </tr>
+        
+          <tr id="int64">
+            <td>int64</td>
+            <td>Uses variable-length encoding. Inefficient for encoding negative numbers – if your field is likely to have negative values, use sint64 instead.</td>
+            <td>int64</td>
+            <td>long</td>
+            <td>int/long</td>
+          </tr>
+        
+          <tr id="uint32">
+            <td>uint32</td>
+            <td>Uses variable-length encoding.</td>
+            <td>uint32</td>
+            <td>int</td>
+            <td>int/long</td>
+          </tr>
+        
+          <tr id="uint64">
+            <td>uint64</td>
+            <td>Uses variable-length encoding.</td>
+            <td>uint64</td>
+            <td>long</td>
+            <td>int/long</td>
+          </tr>
+        
+          <tr id="sint32">
+            <td>sint32</td>
+            <td>Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int32s.</td>
+            <td>int32</td>
+            <td>int</td>
+            <td>int</td>
+          </tr>
+        
+          <tr id="sint64">
+            <td>sint64</td>
+            <td>Uses variable-length encoding. Signed int value. These more efficiently encode negative numbers than regular int64s.</td>
+            <td>int64</td>
+            <td>long</td>
+            <td>int/long</td>
+          </tr>
+        
+          <tr id="fixed32">
+            <td>fixed32</td>
+            <td>Always four bytes. More efficient than uint32 if values are often greater than 2^28.</td>
+            <td>uint32</td>
+            <td>int</td>
+            <td>int</td>
+          </tr>
+        
+          <tr id="fixed64">
+            <td>fixed64</td>
+            <td>Always eight bytes. More efficient than uint64 if values are often greater than 2^56.</td>
+            <td>uint64</td>
+            <td>long</td>
+            <td>int/long</td>
+          </tr>
+        
+          <tr id="sfixed32">
+            <td>sfixed32</td>
+            <td>Always four bytes.</td>
+            <td>int32</td>
+            <td>int</td>
+            <td>int</td>
+          </tr>
+        
+          <tr id="sfixed64">
+            <td>sfixed64</td>
+            <td>Always eight bytes.</td>
+            <td>int64</td>
+            <td>long</td>
+            <td>int/long</td>
+          </tr>
+        
+          <tr id="bool">
+            <td>bool</td>
+            <td></td>
+            <td>bool</td>
+            <td>boolean</td>
+            <td>boolean</td>
+          </tr>
+        
+          <tr id="string">
+            <td>string</td>
+            <td>A string must always contain UTF-8 encoded or 7-bit ASCII text.</td>
+            <td>string</td>
+            <td>String</td>
+            <td>str/unicode</td>
+          </tr>
+        
+          <tr id="bytes">
+            <td>bytes</td>
+            <td>May contain any arbitrary sequence of bytes.</td>
+            <td>string</td>
+            <td>ByteString</td>
+            <td>str</td>
+          </tr>
+        
+      </tbody>
+    </table>
+  </body>
+</html>
+
