@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "common/exchange.proto";
+import "common/trading_pair.proto";
+
+package trading.gateway;
+
+//
+// Exchange public APIs.
+//
+//
+service PublicService {
+  //
+  // Fetch a current ticker. This RPC implement ccxt fetchTicker function.
+  //
+  //
+  rpc FetchTicker (FetchTickerRequest) returns (FetchTickerResponse);
+}
+
+//
+// Exchange private APIs.
+//
+//
+service PrivateService {
+  //
+  // Place order to exchange.
+  //
+  //
+  rpc Order (OrderRequest) returns (OrderResponse);
+}
+
+//
+// Common parameters for every request.
+//
+//
+message BasicRequest {
+}
+
+//
+// Common response for every RPC process result.
+//
+//
+message BasicResponse {
+}
+
+//
+// Necessary credentials for accessing private API.
+//
+//
+message Credential {
+  string api_key  = 1;
+  string secret   = 2;
+  string uid      = 3; // Some exchange require this value.
+  string password = 4; // Some exchange require this value.
+}
+
+//
+// Fetching a ticker from a supplied exchange.
+//
+//
+message FetchTickerRequest {
+  BasicRequest basic                = 1;
+  trading.common.Exchange exchange  = 2;
+  trading.common.TradingPair symbol = 3;
+}
+
+//
+// A ticker response.
+//
+//
+message FetchTickerResponse {
+  BasicResponse basic                = 1;
+  trading.common.TradingPair symbol  = 2;
+  uint64 timestamp                   = 3;
+  google.protobuf.Timestamp datetime = 4;
+  double high                        = 5;
+  double low                         = 6;
+  double bid                         = 7;
+  double ask                         = 8;
+  double vwap                        = 9;
+  double open                        = 10;
+  double close                       = 11;
+  double first                       = 12;
+  double last                        = 13;
+  double change                      = 14;
+  double percentage                  = 15;
+  double average                     = 16;
+  double base_volume                 = 17;
+  double quote_volume                = 18;
+}
+
+//
+// Order request message.
+//
+//
+message OrderRequest {
+  BasicRequest basic    = 1;
+  Credential credential = 2;
+}
+
+//
+// Order response message.
+//
+//
+message OrderResponse {
+  BasicResponse basic = 1;
+}

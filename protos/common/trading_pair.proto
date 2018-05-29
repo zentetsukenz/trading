@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package trading.common;
+
+//
+// A current trading pair. Base currency and Quote currency format are used to
+// describe the trading pair.
+//
+// For example, a trading pair omg_eth, it means that we are trading "omg" using
+// "eth" as a quote asset.
+//
+//
+message TradingPair {
+  //
+  // A currency that we are going to transact on. In other words, it is the
+  // currency that we are trading.
+  //
+  //
+  string base_currency = 1; // Lower case string.
+
+  //
+  // A currency that is used to buy a base currency. We gain the quote
+  // currency after executing sell command on the trading pair.
+  //
+  //
+  string quote_currency = 2; // Lower case string.
+}

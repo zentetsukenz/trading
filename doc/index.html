@@ -262,38 +262,42 @@
             <ul>
               
                 <li>
-                  <a href="#exchange_gateway.Exchange"><span class="badge">M</span>Exchange</a>
+                  <a href="#trading.gateway.BasicRequest"><span class="badge">M</span>BasicRequest</a>
                 </li>
               
                 <li>
-                  <a href="#exchange_gateway.Symbol"><span class="badge">M</span>Symbol</a>
+                  <a href="#trading.gateway.BasicResponse"><span class="badge">M</span>BasicResponse</a>
                 </li>
               
                 <li>
-                  <a href="#exchange_gateway.Ticker"><span class="badge">M</span>Ticker</a>
+                  <a href="#trading.gateway.Credential"><span class="badge">M</span>Credential</a>
                 </li>
               
                 <li>
-                  <a href="#exchange_gateway.TickerRequest"><span class="badge">M</span>TickerRequest</a>
+                  <a href="#trading.gateway.FetchTickerRequest"><span class="badge">M</span>FetchTickerRequest</a>
                 </li>
               
                 <li>
-                  <a href="#exchange_gateway.Tickers"><span class="badge">M</span>Tickers</a>
+                  <a href="#trading.gateway.FetchTickerResponse"><span class="badge">M</span>FetchTickerResponse</a>
                 </li>
               
                 <li>
-                  <a href="#exchange_gateway.Tickers.DataEntry"><span class="badge">M</span>Tickers.DataEntry</a>
+                  <a href="#trading.gateway.OrderRequest"><span class="badge">M</span>OrderRequest</a>
+                </li>
+              
+                <li>
+                  <a href="#trading.gateway.OrderResponse"><span class="badge">M</span>OrderResponse</a>
                 </li>
               
               
+              
+              
                 <li>
-                  <a href="#exchange_gateway.ExchangeName"><span class="badge">E</span>ExchangeName</a>
+                  <a href="#trading.gateway.PrivateService"><span class="badge">S</span>PrivateService</a>
                 </li>
               
-              
-              
                 <li>
-                  <a href="#exchange_gateway.ExchangeGateway"><span class="badge">S</span>ExchangeGateway</a>
+                  <a href="#trading.gateway.PublicService"><span class="badge">S</span>PublicService</a>
                 </li>
               
             </ul>
@@ -1503,31 +1507,22 @@ data is complete for a performance matrix.</p></td>
       <p></p>
 
       
-        <h3 id="exchange_gateway.Exchange">Exchange</h3>
-        <p></p>
+        <h3 id="trading.gateway.BasicRequest">BasicRequest</h3>
+        <p>Common parameters for every request.</p>
 
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>name</td>
-                  <td><a href="#exchange_gateway.ExchangeName">ExchangeName</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
         
 
         
       
-        <h3 id="exchange_gateway.Symbol">Symbol</h3>
-        <p></p>
+        <h3 id="trading.gateway.BasicResponse">BasicResponse</h3>
+        <p>Common response for every RPC process result.</p>
+
+        
+
+        
+      
+        <h3 id="trading.gateway.Credential">Credential</h3>
+        <p>Necessary credentials for accessing private API.</p>
 
         
           <table class="field-table">
@@ -1537,20 +1532,41 @@ data is complete for a performance matrix.</p></td>
             <tbody>
               
                 <tr>
-                  <td>name</td>
+                  <td>api_key</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
+                <tr>
+                  <td>secret</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>uid</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Some exchange require this value. </p></td>
+                </tr>
+              
+                <tr>
+                  <td>password</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p>Some exchange require this value. </p></td>
+                </tr>
+              
             </tbody>
           </table>
         
 
         
       
-        <h3 id="exchange_gateway.Ticker">Ticker</h3>
-        <p></p>
+        <h3 id="trading.gateway.FetchTickerRequest">FetchTickerRequest</h3>
+        <p>Fetching a ticker from a supplied exchange.</p>
 
         
           <table class="field-table">
@@ -1558,10 +1574,54 @@ data is complete for a performance matrix.</p></td>
               <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
             </thead>
             <tbody>
+              
+                <tr>
+                  <td>basic</td>
+                  <td><a href="#trading.gateway.BasicRequest">BasicRequest</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>exchange</td>
+                  <td><a href="#trading.common.Exchange">trading.common.Exchange</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
               
                 <tr>
                   <td>symbol</td>
-                  <td><a href="#string">string</a></td>
+                  <td><a href="#trading.common.TradingPair">trading.common.TradingPair</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+        
+
+        
+      
+        <h3 id="trading.gateway.FetchTickerResponse">FetchTickerResponse</h3>
+        <p>A ticker response.</p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>basic</td>
+                  <td><a href="#trading.gateway.BasicResponse">BasicResponse</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>symbol</td>
+                  <td><a href="#trading.common.TradingPair">trading.common.TradingPair</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -1684,8 +1744,8 @@ data is complete for a performance matrix.</p></td>
 
         
       
-        <h3 id="exchange_gateway.TickerRequest">TickerRequest</h3>
-        <p></p>
+        <h3 id="trading.gateway.OrderRequest">OrderRequest</h3>
+        <p>Order request message.</p>
 
         
           <table class="field-table">
@@ -1695,15 +1755,15 @@ data is complete for a performance matrix.</p></td>
             <tbody>
               
                 <tr>
-                  <td>exchange</td>
-                  <td><a href="#exchange_gateway.Exchange">Exchange</a></td>
+                  <td>basic</td>
+                  <td><a href="#trading.gateway.BasicRequest">BasicRequest</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
               
                 <tr>
-                  <td>symbol</td>
-                  <td><a href="#exchange_gateway.Symbol">Symbol</a></td>
+                  <td>credential</td>
+                  <td><a href="#trading.gateway.Credential">Credential</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -1714,8 +1774,8 @@ data is complete for a performance matrix.</p></td>
 
         
       
-        <h3 id="exchange_gateway.Tickers">Tickers</h3>
-        <p></p>
+        <h3 id="trading.gateway.OrderResponse">OrderResponse</h3>
+        <p>Order response message.</p>
 
         
           <table class="field-table">
@@ -1725,38 +1785,8 @@ data is complete for a performance matrix.</p></td>
             <tbody>
               
                 <tr>
-                  <td>data</td>
-                  <td><a href="#exchange_gateway.Tickers.DataEntry">Tickers.DataEntry</a></td>
-                  <td>repeated</td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-        
-
-        
-      
-        <h3 id="exchange_gateway.Tickers.DataEntry">Tickers.DataEntry</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>key</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>value</td>
-                  <td><a href="#exchange_gateway.Ticker">Ticker</a></td>
+                  <td>basic</td>
+                  <td><a href="#trading.gateway.BasicResponse">BasicResponse</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -1769,623 +1799,12 @@ data is complete for a performance matrix.</p></td>
       
 
       
-        <h3 id="exchange_gateway.ExchangeName">ExchangeName</h3>
-        <p></p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>DEFAULT</td>
-                <td>0</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>_1BROKER</td>
-                <td>1</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>_1BTCXE</td>
-                <td>2</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>ACX</td>
-                <td>3</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>ALLCOIN</td>
-                <td>4</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>ANXPRO</td>
-                <td>5</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BIBOX</td>
-                <td>6</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BINANCE</td>
-                <td>7</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BIT2C</td>
-                <td>8</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BITBAY</td>
-                <td>9</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BITCOINCOID</td>
-                <td>10</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BITFINEX</td>
-                <td>11</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BITFINEX2</td>
-                <td>12</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BITFLYER</td>
-                <td>13</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BITHUMB</td>
-                <td>14</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BITLISH</td>
-                <td>15</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BITMARKET</td>
-                <td>16</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BITMEX</td>
-                <td>17</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BITSO</td>
-                <td>18</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BITSTAMP</td>
-                <td>19</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BITSTAMP1</td>
-                <td>20</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BITTREX</td>
-                <td>21</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BITZ</td>
-                <td>22</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BL3P</td>
-                <td>23</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BLEUTRADE</td>
-                <td>24</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BRAZILIEX</td>
-                <td>25</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BTCBOX</td>
-                <td>26</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BTCCHINA</td>
-                <td>27</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BTCEXCHANGE</td>
-                <td>28</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BTCMARKETS</td>
-                <td>29</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BTCTRADEUA</td>
-                <td>30</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BTCTURK</td>
-                <td>31</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BTCX</td>
-                <td>32</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>BXINTH</td>
-                <td>33</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>CCEX</td>
-                <td>34</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>CEX</td>
-                <td>35</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>CHBTC</td>
-                <td>36</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>CHILEBIT</td>
-                <td>37</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>COBINHOOD</td>
-                <td>38</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>COINCHECK</td>
-                <td>39</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>COINEXCHANGE</td>
-                <td>40</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>COINFLOOR</td>
-                <td>41</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>COINGI</td>
-                <td>42</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>COINMARKETCAP</td>
-                <td>43</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>COINMATE</td>
-                <td>44</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>COINSECURE</td>
-                <td>45</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>COINSPOT</td>
-                <td>46</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>CRYPTOPIA</td>
-                <td>47</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>DSX</td>
-                <td>48</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>EXMO</td>
-                <td>49</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>FLOWBTC</td>
-                <td>50</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>FOXBIT</td>
-                <td>51</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>FYBSE</td>
-                <td>52</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>FYBSG</td>
-                <td>53</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>GATECOIN</td>
-                <td>54</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>GATEIO</td>
-                <td>55</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>GDAX</td>
-                <td>56</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>GEMINI</td>
-                <td>57</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>GETBTC</td>
-                <td>58</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>HITBTC</td>
-                <td>59</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>HITBTC2</td>
-                <td>60</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>HUOBI</td>
-                <td>61</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>HUOBICNY</td>
-                <td>62</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>HUOBIPRO</td>
-                <td>63</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>INDEPENDENTRESERVE</td>
-                <td>64</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>ITBIT</td>
-                <td>65</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>JUBI</td>
-                <td>66</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>KRAKEN</td>
-                <td>67</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>KUCOIN</td>
-                <td>68</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>KUNA</td>
-                <td>69</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>LAKEBTC</td>
-                <td>70</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>LIQUI</td>
-                <td>71</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>LIVECOIN</td>
-                <td>72</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>LUNO</td>
-                <td>73</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>LYKKE</td>
-                <td>74</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>MERCADO</td>
-                <td>75</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>MIXCOINS</td>
-                <td>76</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>NOVA</td>
-                <td>77</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>OKCOINCNY</td>
-                <td>78</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>OKCOINUSD</td>
-                <td>79</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>OKEX</td>
-                <td>80</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>PAYMIUM</td>
-                <td>81</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>POLONIEX</td>
-                <td>82</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>QRYPTOS</td>
-                <td>83</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>QUADRIGACX</td>
-                <td>84</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>QUOINEX</td>
-                <td>85</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>SOUTHXCHANGE</td>
-                <td>86</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>SURBITCOIN</td>
-                <td>87</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>THEROCK</td>
-                <td>88</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>TIDEX</td>
-                <td>89</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>URDUBIT</td>
-                <td>90</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>VAULTORO</td>
-                <td>91</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>VBTC</td>
-                <td>92</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>VIRWOX</td>
-                <td>93</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>WEX</td>
-                <td>94</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>XBTCE</td>
-                <td>95</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>YOBIT</td>
-                <td>96</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>YUNBI</td>
-                <td>97</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>ZAIF</td>
-                <td>98</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>ZB</td>
-                <td>99</td>
-                <td><p></p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
 
       
 
       
-        <h3 id="exchange_gateway.ExchangeGateway">ExchangeGateway</h3>
-        <p></p>
+        <h3 id="trading.gateway.PrivateService">PrivateService</h3>
+        <p>Exchange private APIs.</p>
         <table class="enum-table">
           <thead>
             <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
@@ -2393,17 +1812,28 @@ data is complete for a performance matrix.</p></td>
           <tbody>
             
               <tr>
-                <td>FetchTickers</td>
-                <td><a href="#exchange_gateway.Exchange">Exchange</a></td>
-                <td><a href="#exchange_gateway.Tickers">Tickers</a></td>
-                <td><p></p></td>
+                <td>Order</td>
+                <td><a href="#trading.gateway.OrderRequest">OrderRequest</a></td>
+                <td><a href="#trading.gateway.OrderResponse">OrderResponse</a></td>
+                <td><p>Place order to exchange.</p></td>
               </tr>
+            
+          </tbody>
+        </table>
+      
+        <h3 id="trading.gateway.PublicService">PublicService</h3>
+        <p>Exchange public APIs.</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Method Name</td><td>Request Type</td><td>Response Type</td><td>Description</td></tr>
+          </thead>
+          <tbody>
             
               <tr>
                 <td>FetchTicker</td>
-                <td><a href="#exchange_gateway.TickerRequest">TickerRequest</a></td>
-                <td><a href="#exchange_gateway.Ticker">Ticker</a></td>
-                <td><p></p></td>
+                <td><a href="#trading.gateway.FetchTickerRequest">FetchTickerRequest</a></td>
+                <td><a href="#trading.gateway.FetchTickerResponse">FetchTickerResponse</a></td>
+                <td><p>Fetch a current ticker. This RPC implement ccxt fetchTicker function.</p></td>
               </tr>
             
           </tbody>

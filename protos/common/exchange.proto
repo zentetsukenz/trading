@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+package trading.common;
+
+//
+// Exchange list derived from ccxt.
+//
+//
+message Exchange {
+        enum Name {
+             NOT_EXIST          = 0;
+             _1BROKER           = 1;
+             _1BTCXE            = 2;
+             ACX                = 3;
+             ALLCOIN            = 4;
+             ANXPRO             = 5;
+             BIBOX              = 6;
+             BINANCE            = 7;
+             BIT2C              = 8;
+             BITBAY             = 9;
+             BITCOINCOID        = 10;
+             BITFINEX           = 11;
+             BITFINEX2          = 12;
+             BITFLYER           = 13;
+             BITHUMB            = 14;
+             BITLISH            = 15;
+             BITMARKET          = 16;
+             BITMEX             = 17;
+             BITSO              = 18;
+             BITSTAMP           = 19;
+             BITSTAMP1          = 20;
+             BITTREX            = 21;
+             BITZ               = 22;
+             BL3P               = 23;
+             BLEUTRADE          = 24;
+             BRAZILIEX          = 25;
+             BTCBOX             = 26;
+             BTCCHINA           = 27;
+             BTCEXCHANGE        = 28;
+             BTCMARKETS         = 29;
+             BTCTRADEUA         = 30;
+             BTCTURK            = 31;
+             BTCX               = 32;
+             BXINTH             = 33;
+             CCEX               = 34;
+             CEX                = 35;
+             CHBTC              = 36;
+             CHILEBIT           = 37;
+             COBINHOOD          = 38;
+             COINCHECK          = 39;
+             COINEXCHANGE       = 40;
+             COINFLOOR          = 41;
+             COINGI             = 42;
+             COINMARKETCAP      = 43;
+             COINMATE           = 44;
+             COINSECURE         = 45;
+             COINSPOT           = 46;
+             CRYPTOPIA          = 47;
+             DSX                = 48;
+             EXMO               = 49;
+             FLOWBTC            = 50;
+             FOXBIT             = 51;
+             FYBSE              = 52;
+             FYBSG              = 53;
+             GATECOIN           = 54;
+             GATEIO             = 55;
+             GDAX               = 56;
+             GEMINI             = 57;
+             GETBTC             = 58;
+             HITBTC             = 59;
+             HITBTC2            = 60;
+             HUOBI              = 61;
+             HUOBICNY           = 62;
+             HUOBIPRO           = 63;
+             INDEPENDENTRESERVE = 64;
+             ITBIT              = 65;
+             JUBI               = 66;
+             KRAKEN             = 67;
+             KUCOIN             = 68;
+             KUNA               = 69;
+             LAKEBTC            = 70;
+             LIQUI              = 71;
+             LIVECOIN           = 72;
+             LUNO               = 73;
+             LYKKE              = 74;
+             MERCADO            = 75;
+             MIXCOINS           = 76;
+             NOVA               = 77;
+             OKCOINCNY          = 78;
+             OKCOINUSD          = 79;
+             OKEX               = 80;
+             PAYMIUM            = 81;
+             POLONIEX           = 82;
+             QRYPTOS            = 83;
+             QUADRIGACX         = 84;
+             QUOINEX            = 85;
+             SOUTHXCHANGE       = 86;
+             SURBITCOIN         = 87;
+             THEROCK            = 88;
+             TIDEX              = 89;
+             URDUBIT            = 90;
+             VAULTORO           = 91;
+             VBTC               = 92;
+             VIRWOX             = 93;
+             WEX                = 94;
+             XBTCE              = 95;
+             YOBIT              = 96;
+             YUNBI              = 97;
+             ZAIF               = 98;
+             ZB                 = 99;
+        }
+        Name name = 1;
+}
