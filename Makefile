@@ -9,7 +9,7 @@ all: python elixir doc
 
 python: $(addsuffix _pb2_grpc.py,$(basename $(addprefix $(gen_python_base_path),$(all_protos)))) $(addsuffix _pb2.py,$(basename $(addprefix $(gen_python_base_path),$(all_protos))))
 elixir: $(addsuffix .pb.ex,$(basename $(addprefix $(gen_elixir_base_path),$(all_protos))))
-doc: doc/index.html
+doc: docs/index.html
 
 # Python
 
@@ -44,10 +44,10 @@ $(gen_elixir_base_path)%.pb.ex: protos/%.proto
 
 # Document
 
-doc/index.html:
-	mkdir -p doc
+docs/index.html:
+	mkdir -p docs
 	docker run --rm \
-		-v $(workdir)/doc:/out \
+		-v $(workdir)/docs:/out \
 		-v $(workdir)/protos:/protos \
 		-v $(workdir)/protos/messages:/protos/messages \
 		pseudomuto/protoc-gen-doc --doc_opt=html,index.html protos/*.proto protos/messages/*.proto
@@ -56,4 +56,4 @@ doc/index.html:
 
 clean:
 	rm -rf gen
-	rm -rf doc
+	rm -rf docs
