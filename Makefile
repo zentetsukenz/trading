@@ -1,85 +1,59 @@
 workdir = $(shell pwd)
-gen_path = gen/trading
-doc_path = doc
-protos_path = protos
 
-init:
-	mkdir -p $(gen_path)
+all_protos = $(basename $(subst protos/,,$(shell find protos/ -name "*.proto")))
 
-all: arbitrage gateway
+gen_python_base_path = gen/python/
+gen_elixir_base_path = gen/elixir/
 
-#
-# Arbitrage
-#
-#
-arbitrage_python_path = $(gen_path)/arbitrage/python
-arbitrage_elixir_path = $(gen_path)/arbitrage/elixir
-arbitrage_proto_path = $(protos_path)/arbitrage.proto
+all: python elixir doc
 
-arbitrage: arbitrage_python arbitrage_elixir arbitrage_doc
+python: $(addsuffix _pb2_grpc.py,$(basename $(addprefix $(gen_python_base_path),$(all_protos)))) $(addsuffix _pb2.py,$(basename $(addprefix $(gen_python_base_path),$(all_protos))))
+elixir: $(addsuffix .pb.ex,$(basename $(addprefix $(gen_elixir_base_path),$(all_protos))))
+doc: doc/index.html
 
-# - Python
-#
-arbitrage_python:
-	mkdir -p $(arbitrage_python_path)
+# Python
+
+$(gen_python_base_path)messages/%_pb2_grpc.py: ;
+
+$(gen_python_base_path)%_pb2.py: protos/%.proto
+	mkdir -p $(gen_python_base_path)
+	mkdir -p $(gen_python_base_path)$(dir $*)
 	python -m grpc_tools.protoc \
 		-Iprotos \
-		--python_out=$(arbitrage_python_path) \
-		--grpc_python_out=$(arbitrage_python_path) \
-		$(arbitrage_proto_path)
+		--python_out=$(gen_python_base_path) \
+		$<
 
-# - Elixr
-#
-arbitrage_elixir:
-	mkdir -p $(arbitrage_elixir_path)
-	protoc -Iprotos --elixir_out=plugins=grpc:$(arbitrage_elixir_path) $(arbitrage_proto_path)
-
-# - Document
-#
-arbitrage_doc:
-	mkdir -p $(doc_path)
-	docker run --rm \
-		-v $(workdir)/$(doc_path):/out \
-		-v $(workdir)/$(protos_path):/protos \
-		pseudomuto/protoc-gen-doc
-
-#
-# Gateway
-#
-#
-gateway_python_path = $(gen_path)/gateway/python
-gateway_elixir_path = $(gen_path)/gateway/elixir
-gateway_proto_path = $(protos_path)/gateway.proto
-
-gateway: gateway_python gateway_elixir gateway_doc
-
-# - Python
-#
-gateway_python:
-	mkdir -p $(gateway_python_path)
+$(gen_python_base_path)%_pb2_grpc.py: protos/%.proto
+	mkdir -p $(gen_python_base_path)
+	mkdir -p $(gen_python_base_path)$(dir $*)
 	python -m grpc_tools.protoc \
 		-Iprotos \
-		--python_out=$(gateway_python_path) \
-		--grpc_python_out=$(gateway_python_path) \
-		$(gateway_proto_path)
+		--grpc_python_out=$(gen_python_base_path) \
+		$<
 
-# - Elixr
-#
-gateway_elixir:
-	mkdir -p $(gateway_elixir_path)
-	protoc -Iprotos --elixir_out=plugins=grpc:$(gateway_elixir_path) $(gateway_proto_path)
+# Elixir
 
-# - Document
-#
-gateway_doc:
-	mkdir -p $(doc_path)
+$(gen_elixir_base_path)messages/%.pb.ex: protos/messages/%.proto
+	mkdir -p $(gen_elixir_base_path)$(dir $*)
+	protoc -Iprotos --elixir_out=$(gen_elixir_base_path) $<
+
+$(gen_elixir_base_path)%.pb.ex: protos/%.proto
+	mkdir -p $(gen_elixir_base_path)
+	mkdir -p $(gen_elixir_base_path)$(dir $*)
+	protoc -Iprotos --elixir_out=plugins=grpc:$(gen_elixir_base_path) $<
+
+# Document
+
+doc/index.html:
+	mkdir -p doc
 	docker run --rm \
-		-v $(workdir)/$(doc_path):/out \
-		-v $(workdir)/$(protos_path):/protos \
-		pseudomuto/protoc-gen-doc
-
+		-v $(workdir)/doc:/out \
+		-v $(workdir)/protos:/protos \
+		-v $(workdir)/protos/messages:/protos/messages \
+		pseudomuto/protoc-gen-doc --doc_opt=html,index.html protos/*.proto protos/messages/*.proto
 
 # Utils =====
-#
+
 clean:
 	rm -rf gen
+	rm -rf doc

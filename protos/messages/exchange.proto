@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package trading.common;
+package trading.messages;
 
 //
 // Exchange list derived from ccxt.

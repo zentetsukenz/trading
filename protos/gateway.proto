@@ -1,8 +1,8 @@
 syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
-import "common/exchange.proto";
-import "common/trading_pair.proto";
+import "messages/exchange.proto";
+import "messages/trading_pair.proto";
 
 package trading.gateway;
 
@@ -60,9 +60,9 @@ message Credential {
 //
 //
 message FetchTickerRequest {
-  BasicRequest basic                = 1;
-  trading.common.Exchange exchange  = 2;
-  trading.common.TradingPair symbol = 3;
+  BasicRequest basic                  = 1;
+  trading.messages.Exchange exchange  = 2;
+  trading.messages.TradingPair symbol = 3;
 }
 
 //
@@ -70,24 +70,24 @@ message FetchTickerRequest {
 //
 //
 message FetchTickerResponse {
-  BasicResponse basic                = 1;
-  trading.common.TradingPair symbol  = 2;
-  uint64 timestamp                   = 3;
-  google.protobuf.Timestamp datetime = 4;
-  double high                        = 5;
-  double low                         = 6;
-  double bid                         = 7;
-  double ask                         = 8;
-  double vwap                        = 9;
-  double open                        = 10;
-  double close                       = 11;
-  double first                       = 12;
-  double last                        = 13;
-  double change                      = 14;
-  double percentage                  = 15;
-  double average                     = 16;
-  double base_volume                 = 17;
-  double quote_volume                = 18;
+  BasicResponse basic                 = 1;
+  trading.messages.TradingPair symbol = 2;
+  uint64 timestamp                    = 3;
+  google.protobuf.Timestamp datetime  = 4;
+  double high                         = 5;
+  double low                          = 6;
+  double bid                          = 7;
+  double ask                          = 8;
+  double vwap                         = 9;
+  double open                         = 10;
+  double close                        = 11;
+  double first                        = 12;
+  double last                         = 13;
+  double change                       = 14;
+  double percentage                   = 15;
+  double average                      = 16;
+  double base_volume                  = 17;
+  double quote_volume                 = 18;
 }
 
 //

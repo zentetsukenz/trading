@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-import "common/exchange.proto";
-import "common/trading_pair.proto";
+import "messages/exchange.proto";
+import "messages/trading_pair.proto";
 
 package trading.arbitrage;
 
@@ -58,13 +58,13 @@ message BasicResponse {}
 //
 //
 message InitializeRequest {
-  BasicRequest basic                       = 1;
-  trading.common.Exchange buying_exchange  = 2;
-  trading.common.Exchange selling_exchange = 3;
-  trading.common.TradingPair trading_pair  = 4;
-  repeated TradingPoint enter_points       = 5;
-  repeated TradingPoint exit_points        = 6;
-  double slippage_allowance                = 7;
+  BasicRequest basic                         = 1;
+  trading.messages.Exchange buying_exchange  = 2;
+  trading.messages.Exchange selling_exchange = 3;
+  trading.messages.TradingPair trading_pair  = 4;
+  repeated TradingPoint enter_points         = 5;
+  repeated TradingPoint exit_points          = 6;
+  double slippage_allowance                  = 7;
 }
 
 //
@@ -131,12 +131,12 @@ message AnalysisResponse {
 //
 //
 message Context {
-  string buying_exchange                  = 1;
-  string selling_exchange                 = 2;
-  trading.common.TradingPair trading_pair = 3;
-  repeated TradingPoint entry_points      = 4; // Positive gap
-  repeated TradingPoint exit_points       = 5; // Negative gap
-  double slippage_allowance               = 6;
+  string buying_exchange                    = 1;
+  string selling_exchange                   = 2;
+  trading.messages.TradingPair trading_pair = 3;
+  repeated TradingPoint entry_points        = 4; // Positive gap
+  repeated TradingPoint exit_points         = 5; // Negative gap
+  double slippage_allowance                 = 6;
 }
 
 //

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package trading.common;
+package trading.messages;
 
 //
 // A current trading pair. Base currency and Quote currency format are used to
