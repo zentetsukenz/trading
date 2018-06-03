@@ -134,7 +134,7 @@ message Context {
   trading.messages.Exchange buying_exchange  = 1;
   trading.messages.Exchange selling_exchange = 2;
   trading.messages.TradingPair trading_pair  = 3;
-  repeated TradingPoint entry_points         = 4; // Positive gap
+  repeated TradingPoint enter_points         = 4; // Positive gap
   repeated TradingPoint exit_points          = 5; // Negative gap
   double slippage_allowance                  = 6;
 }
